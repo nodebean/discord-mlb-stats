@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord-mlb-stats
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discord-mlb-stats
+  template:
+    metadata:
+      labels:
+        app: discord-mlb-stats
+    spec:
+      containers:
+      - name: discord-mlb-stats
+        image: your-docker-image:latest
+        env:
+        - name: DISCORD_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: discord-mlb-stats-secret
+              key: discord-token

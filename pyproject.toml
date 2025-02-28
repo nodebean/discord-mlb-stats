@@ -1,0 +1,12 @@
+[project]
+name = "discord-mlb-stats"
+version = "1.0.0"
+description = "Simple bot to output today's times and scores"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "discord-py>=2.4.0",
+    "mlb-statsapi>=1.8.1",
+    "pytz>=2025.1",
+    "table2ascii>=1.1.3",
+]
