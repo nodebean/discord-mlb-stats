@@ -13,11 +13,11 @@ spec:
         app: discord-mlb-stats
     spec:
       containers:
-      - name: discord-mlb-stats
-        image: your-docker-image:latest
-        env:
-        - name: DISCORD_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: discord-mlb-stats-secret
-              key: discord-token
+        - name: discord-mlb-stats
+          image: localhost:32000/discord-mlb-stats:latest
+          env:
+            - name: DISCORD_MLB_STATS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: discord-mlb-stats-token
+                  key: DISCORD_MLB_STATS_TOKEN

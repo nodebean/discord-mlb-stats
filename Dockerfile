@@ -1,17 +1,28 @@
-FROM python:3.11-slim-bookworm
+FROM python:3.12 as build
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get clean
+RUN apt-get update && apt-get install -y build-essential curl
 
-WORKDIR /app
+ENV VIRTUAL_ENV=/opt/venv \
+    PATH="/opt/venv/bin:$PATH"
 
-COPY requirements.txt .
+ADD https://astral.sh/uv/install.sh /install.sh
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN chmod -R 655 /install.sh && /install.sh && rm /install.sh
 
-COPY bot.py .
+COPY ./requirements.txt .
 
-USER nodbody
+RUN /root/.local/bin/uv venv /opt/venv && \
+    /root/.local/bin/uv pip install --no-cache -r requirements.txt
 
-ENTRYPOINT ["python", "bot.py"]
+
+FROM python:3.12-slim-bookworm
+
+COPY --from=build /opt/venv /opt/venv
+
+COPY bot.py bot.py
+
+USER nobody
+
+ENV PATH="/opt/venv/bin:$PATH"
+
+ENTRYPOINT [ "python","bot.py" ]
