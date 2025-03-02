@@ -12,7 +12,7 @@ import pytz
 
 from table2ascii import table2ascii as t2a, PresetStyle
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_TOKEN = os.getenv("DISCORD_MLB_STATS_TOKEN")
 
 TEAM_DATA = {
     "Arizona Diamondbacks": "ARI",
